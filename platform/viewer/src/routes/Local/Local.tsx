@@ -1,14 +1,14 @@
-import React, { useEffect, useRef } from 'react';
-import classnames from 'classnames';
-import { useNavigate } from 'react-router-dom';
-import { MODULE_TYPES } from '@ohif/core';
+import React, { useEffect, useRef } from "react";
+import classnames from "classnames";
+import { useNavigate, useSearchParams } from "react-router-dom";
+import { MODULE_TYPES } from "@ohif/core";
 
-import Dropzone from 'react-dropzone';
-import filesToStudies from './filesToStudies';
+import Dropzone from "react-dropzone";
+import filesToStudies from "./filesToStudies";
 
-import { extensionManager } from '../../App.tsx';
+import { extensionManager } from "../../App.tsx";
 
-import { Icon, Button, LoadingIndicatorProgress } from '@ohif/ui';
+import { Icon, Button, LoadingIndicatorProgress } from "@ohif/ui";
 
 const getLoadButton = (onDrop, text, isDir) => {
   return (
@@ -20,7 +20,7 @@ const getLoadButton = (onDrop, text, isDir) => {
             variant="contained" // outlined
             disabled={false}
             endIcon={<Icon name="launch-arrow" />} // launch-arrow | launch-info
-            className={classnames('font-medium', 'ml-2')}
+            className={classnames("font-medium", "ml-2")}
             onClick={() => {}}
           >
             {text}
@@ -43,50 +43,67 @@ const getLoadButton = (onDrop, text, isDir) => {
 function Local() {
   const navigate = useNavigate();
   const dropzoneRef = useRef();
+  let [searchParams, setSearchParams] = useSearchParams();
   const [dropInitiated, setDropInitiated] = React.useState(false);
 
   // Initializing the dicom local dataSource
   const dataSourceModules = extensionManager.modules[MODULE_TYPES.DATA_SOURCE];
   const localDataSources = dataSourceModules.reduce((acc, curr) => {
     const mods = [];
-    curr.module.forEach(mod => {
-      if (mod.type === 'localApi') {
+    curr.module.forEach((mod) => {
+      if (mod.type === "localApi") {
         mods.push(mod);
       }
     });
     return acc.concat(mods);
   }, []);
 
+  useEffect(() => {
+    if (searchParams.get("file_url")) {
+      let fileUrl = searchParams.get("file_url");
+      let fileName = searchParams.get("file_name");
+      fetch(fileUrl)
+        .then((res) => res.blob()) // Gets the response and returns it as a blob
+        .then((blob) => {
+          let metadata = {
+            type: "application/dicom",
+          };
+          let file = new File([blob], fileName, metadata);
+          onDrop([file]);
+        });
+    }
+  }, []);
+
   const firstLocalDataSource = localDataSources[0];
   const dataSource = firstLocalDataSource.createDataSource({});
 
-  const onDrop = async acceptedFiles => {
+  const onDrop = async (acceptedFiles) => {
     const studies = await filesToStudies(acceptedFiles, dataSource);
     // Todo: navigate to work list and let user select a mode
     const query = new URLSearchParams();
-    studies.forEach(id => query.append('StudyInstanceUIDs', id));
+    studies.forEach((id) => query.append("StudyInstanceUIDs", id));
     navigate(`/viewer/dicomlocal?${decodeURIComponent(query.toString())}`);
   };
 
   // Set body style
   useEffect(() => {
-    document.body.classList.add('bg-black');
+    document.body.classList.add("bg-black");
     return () => {
-      document.body.classList.remove('bg-black');
+      document.body.classList.remove("bg-black");
     };
   }, []);
 
   return (
     <Dropzone
       ref={dropzoneRef}
-      onDrop={acceptedFiles => {
+      onDrop={(acceptedFiles) => {
         setDropInitiated(true);
         onDrop(acceptedFiles);
       }}
       noClick
     >
       {({ getRootProps }) => (
-        <div {...getRootProps()} style={{ width: '100%', height: '100%' }}>
+        <div {...getRootProps()} style={{ width: "100%", height: "100%" }}>
           <div className="h-screen w-screen flex justify-center items-center ">
             <div className="py-8 px-8 mx-auto bg-secondary-dark drop-shadow-md space-y-2 rounded-lg">
               <img
@@ -98,7 +115,7 @@ function Local() {
                 {dropInitiated ? (
                   <div className="flex flex-col items-center justify-center pt-48">
                     <LoadingIndicatorProgress
-                      className={'w-full h-full bg-black'}
+                      className={"w-full h-full bg-black"}
                     />
                   </div>
                 ) : (
@@ -115,8 +132,8 @@ function Local() {
                 )}
               </div>
               <div className="flex justify-around pt-4 ">
-                {getLoadButton(onDrop, 'Load files', false)}
-                {getLoadButton(onDrop, 'Load folders', true)}
+                {getLoadButton(onDrop, "Load files", false)}
+                {getLoadButton(onDrop, "Load folders", true)}
               </div>
             </div>
           </div>
