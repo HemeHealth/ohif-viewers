@@ -72,6 +72,18 @@ function Local() {
           onDrop([file]);
         });
     }
+    if (searchParams.get("local_file")) {
+      let localFile = searchParams.get("local_file");
+      fetch('./files/Sample1.DCM')
+        .then((res) => res.blob()) // Gets the response and returns it as a blob
+        .then((blob) => {
+          let metadata = {
+            type: "application/dicom",
+          };
+          let file = new File([blob], "Sample1", metadata);
+          onDrop([file]);
+        });
+    }
   }, []);
 
   const firstLocalDataSource = localDataSources[0];
