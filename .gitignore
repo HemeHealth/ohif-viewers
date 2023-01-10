@@ -15,6 +15,7 @@ coverage/
 .yalc
 yalc.lock
 *.dcm
+!platform/viewer/public/files/*.dcm
 # Logging, System files, misc.
 .idea/
 .npm
