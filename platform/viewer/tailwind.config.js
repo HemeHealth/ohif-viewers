@@ -40,17 +40,25 @@ module.exports = {
       },
 
       primary: {
-        light: '#5acce6',
-        main: '#0944b3',
+        // light: '#5acce6',
+        light: "#FFF",
+        // main: '#0944b3',
+        main: '#006587',
         dark: '#090c29',
+        // dark: '#016587', // heme dark
         active: '#348cfd',
+        // active: '#001922',
       },
 
       secondary: {
-        light: '#3a3f99',
-        main: '#2b166b',
-        dark: '#041c4a',
+        // light: '#3a3f99',
+        light: "#006587",
+        // main: '#2b166b',
+        main: '#006587',
+        // dark: '#041c4a',
+        dark: '#016587', // heme dark
         active: '#1f1f27',
+        // active: '#006587',
       },
 
       common: {
