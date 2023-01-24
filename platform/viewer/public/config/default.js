@@ -36,11 +36,11 @@ window.config = {
       configuration: {
         name: 'GCP',
         wadoUriRoot:
-          'https://healthcare.googleapis.com/v1/projects/ohif-cloud-healthcare/locations/us-east4/datasets/ohif-qa-dataset/dicomStores/ohif-qa-2/dicomWeb',
+          'https://healthcare.googleapis.com/v1/projects/iron-radio-374414/locations/us-central1/datasets/dataset1/dicomStores/dicomstore1/dicomWeb',
         qidoRoot:
-          'https://healthcare.googleapis.com/v1/projects/ohif-cloud-healthcare/locations/us-east4/datasets/ohif-qa-dataset/dicomStores/ohif-qa-2/dicomWeb',
+          'https://healthcare.googleapis.com/v1/projects/iron-radio-374414/locations/us-central1/datasets/dataset1/dicomStores/dicomstore1/dicomWeb',
         wadoRoot:
-          'https://healthcare.googleapis.com/v1/projects/ohif-cloud-healthcare/locations/us-east4/datasets/ohif-qa-dataset/dicomStores/ohif-qa-2/dicomWeb',
+          'https://healthcare.googleapis.com/v1/projects/iron-radio-374414/locations/us-central1/datasets/dataset1/dicomStores/dicomstore1/dicomWeb',
         qidoSupportsIncludeField: true,
         imageRendering: 'wadors',
         thumbnailRendering: 'wadors',
