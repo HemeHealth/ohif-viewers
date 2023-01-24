@@ -11,7 +11,7 @@ window.config = {
       // Authorization Server URL
       authority: 'https://accounts.google.com',
       client_id:
-        '238378653434-c31r7dmd1kensgq8kcrc0ppmk09bso5e.apps.googleusercontent.com',
+        '650183098343-598o9rp9j4ik3vpcs3u9pl2l26bppn6k.apps.googleusercontent.com',
       redirect_uri: '/callback',
       response_type: 'id_token token',
       scope:
